@@ -7,7 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/99designs/keyring"
-	analytics "github.com/hunkeelin/analytics-go"
+	analytics "github.com/segmentio/analytics-go"
 	"github.com/hunkeelin/aws-okta/lib"
 	"github.com/spf13/cobra"
 )
