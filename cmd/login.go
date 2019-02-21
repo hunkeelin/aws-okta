@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/99designs/keyring"
-	analytics "github.com/segmentio/analytics-go"
-	"github.com/segmentio/aws-okta/lib"
+	analytics "github.com/hunkeelin/analytics-go"
+	"github.com/hunkeelin/aws-okta/lib"
 	"github.com/skratchdot/open-golang/open"
 	"github.com/spf13/cobra"
 )
