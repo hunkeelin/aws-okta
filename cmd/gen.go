@@ -24,15 +24,15 @@ var all bool
 func init() {
 	RootCmd.AddCommand(genCmd)
 	genCmd.Flags().StringVarP(&filedir, "path", "p", "", "The file path you want the credentials to be generated on")
-	genCmd.Flags().BoolVarP(&all, "genall", "", false, "Select this option if you want to generate credentials for all roles.")
+//	genCmd.Flags().BoolVarP(&all, "genall", "", false, "Select this option if you want to generate credentials for all roles.")
 }
-func genPre(cmd *cobra.Command, args []string) {
+func genPre(cmd *cobra.Command, args []string){
 	if filedir == "" {
 		u, err := user.Current()
 		if err != nil {
-			return err
+			panic(err)
 		}
-		filedir = "/User/" + u.Username + "/.aws/credentials"
+		filedir = "/Users/" + u.Username + "/.aws/credentials"
 	}
 }
 func genRun(cmd *cobra.Command, args []string) error {
@@ -95,37 +95,38 @@ func genRun(cmd *cobra.Command, args []string) error {
 			return fmt.Errorf("Unable to execute okta login %v", err)
 		}
 	} else {
-		if all {
-			for key, _ := range profiles {
-				w, err = generateCredFile(p, profile, profiles)
-				if err != nil {
-					return fmt.Errorf("Unable to generate cred file %v", err)
-				}
-				towrite = append(towrite, w...)
-			}
-		} else {
-			towrite, err = generateCredFile(p, profile, profiles)
-			if err != nil {
-				return fmt.Errorf("Unable to generate cred file %v", err)
-			}
-		}
+//		if all {
+//			for key, _ := range profiles {
+//				w, err := generateCredBytes(p, key, profiles)
+//				if err != nil {
+//					return fmt.Errorf("Unable to generate cred file %v", err)
+//				}
+//				towrite = append(towrite, w...)
+//			}
+//		} else {
+        towrite, err = generateCredBytes(p, profile, profiles)
+        if err != nil {
+            return fmt.Errorf("Unable to generate cred file %v", err)
+        }
+//		}
 		f, err := os.OpenFile(filedir, os.O_WRONLY|os.O_CREATE|os.O_TRUNC|os.O_APPEND, 0600)
 		if err != nil {
 			return err
 		}
 		defer f.Close()
+        fmt.Println("Writing profile with profile name v"+profile)
 		f.Write(towrite)
 	}
 	return nil
 }
 
-func generateCredFile(p *lib.Provider, profile string, profiles lib.Profiles) error {
+func generateCredBytes(p *lib.Provider, profile string, profiles lib.Profiles) ([]byte,error) {
 	var toreturn []byte
 	creds, err := p.Retrieve()
 	if err != nil {
 		return toreturn, err
 	}
-	l0 := []byte("[" + profile + "]\n")
+	l0 := []byte("[v" + profile + "]\n")
 	l1 := []byte("aws_access_key_id = " + creds.AccessKeyID + "\n")
 	l2 := []byte("aws_secret_access_key = " + creds.SecretAccessKey + "\n")
 	l3 := []byte("aws_session_token = " + creds.SessionToken + "\n")
