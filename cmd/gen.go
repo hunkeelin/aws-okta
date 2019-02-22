@@ -24,7 +24,7 @@ var all bool
 func init() {
 	RootCmd.AddCommand(genCmd)
 	genCmd.Flags().StringVarP(&filedir, "path", "p", "", "The file path you want the credentials to be generated on")
-//	genCmd.Flags().BoolVarP(&all, "genall", "", false, "Select this option if you want to generate credentials for all roles.")
+	genCmd.Flags().BoolVarP(&all, "genall", "", false, "Select this option if you want to generate credentials for all roles.")
 }
 func genPre(cmd *cobra.Command, args []string){
 	if filedir == "" {
@@ -126,7 +126,7 @@ func generateCredBytes(p *lib.Provider, profile string, profiles lib.Profiles) (
 	if err != nil {
 		return toreturn, err
 	}
-	l0 := []byte("[v" + profile + "]\n")
+	l0 := []byte("[" + profile[1:] + "]\n")
 	l1 := []byte("aws_access_key_id = " + creds.AccessKeyID + "\n")
 	l2 := []byte("aws_secret_access_key = " + creds.SecretAccessKey + "\n")
 	l3 := []byte("aws_session_token = " + creds.SessionToken + "\n")
