@@ -126,7 +126,7 @@ func generateCredBytes(p *lib.Provider, profile string, profiles lib.Profiles) (
 	if err != nil {
 		return toreturn, err
 	}
-	l0 := []byte("[" + profile[1:] + "]\n")
+	l0 := []byte("[" + profile[5:] + "]\n")
 	l1 := []byte("aws_access_key_id = " + creds.AccessKeyID + "\n")
 	l2 := []byte("aws_secret_access_key = " + creds.SecretAccessKey + "\n")
 	l3 := []byte("aws_session_token = " + creds.SessionToken + "\n")
