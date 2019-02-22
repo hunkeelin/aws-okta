@@ -1,28 +1,21 @@
 package cmd
 
 import (
-	//"encoding/json"
 	"fmt"
-	//	"io/ioutil"
-	//	"net/http"
-	//	"net/url"
-	"os"
-	"os/user"
-	//	"time"
-
 	"github.com/99designs/keyring"
 	"github.com/hunkeelin/aws-okta/lib"
 	analytics "github.com/segmentio/analytics-go"
-	//	"github.com/skratchdot/open-golang/open"
 	"github.com/spf13/cobra"
+	"os"
+	"os/user"
 )
 
 // genCmd represents the gen command
 var genCmd = &cobra.Command{
-	Use:   "gen <profile>",
-	Short: "gen will generate aws config for you",
-	RunE:  genRun,
-	//	PreRun: genPre,
+	Use:    "gen <profile>",
+	Short:  "gen will generate aws config for you",
+	RunE:   genRun,
+	PreRun: genPre,
 }
 
 var filedir string

@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/99designs/keyring"
-	analytics "github.com/segmentio/analytics-go"
 	"github.com/hunkeelin/aws-okta/lib"
+	analytics "github.com/segmentio/analytics-go"
 	"github.com/skratchdot/open-golang/open"
 	"github.com/spf13/cobra"
 )
@@ -115,8 +115,6 @@ func loginRun(cmd *cobra.Command, args []string) error {
 		oktaLogin(p)
 	} else {
 		federatedLogin(p, profile, profiles)
-  //      fmt.Println("this is profile",profile)
-  //      fmt.Println("this is profile",profiles)
 	}
 
 	return nil
