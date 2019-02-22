@@ -115,6 +115,8 @@ func loginRun(cmd *cobra.Command, args []string) error {
 		oktaLogin(p)
 	} else {
 		federatedLogin(p, profile, profiles)
+  //      fmt.Println("this is profile",profile)
+  //      fmt.Println("this is profile",profiles)
 	}
 
 	return nil
@@ -134,13 +136,11 @@ func oktaLogin(p *lib.Provider) error {
 
 	return nil
 }
-
 func federatedLogin(p *lib.Provider, profile string, profiles lib.Profiles) error {
 	creds, err := p.Retrieve()
 	if err != nil {
 		return err
 	}
-
 	jsonBytes, err := json.Marshal(map[string]string{
 		"sessionId":    creds.AccessKeyID,
 		"sessionKey":   creds.SecretAccessKey,
